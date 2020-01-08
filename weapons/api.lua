@@ -1,6 +1,6 @@
 
 --[[-----------------------------------------------------------------------------
-	Weapons v1.0 - a code library for Into the Breach.
+	Weapons v1.2 - a code library for Into the Breach.
 	
 	API for
 	 - causing a pawn to fire an arbitrary weapon, regardless if it is equipped or not.

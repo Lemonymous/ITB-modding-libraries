@@ -1,20 +1,20 @@
 
 ---------------------------------------------------------------------
--- getWeapons v1.1 - code library
+-- getWeapons v1.3 - code library
 --[[-----------------------------------------------------------------
 	provides functions for finding a pawn's equipped weapons
 	during missions.
 	
 	requires modApiExt loaded to function.
 ]]
+local mod = mod_loader.mods[modApi.currentMod]
+local modUtils = require(mod.scriptPath .."modApiExt/modApiExt")
 local this = {}
 
 local function getWeapons(pawnId)
 	pawnId = (type(pawnId) == 'userdata') and pawnId:GetId() or pawnId
 	assert(type(pawnId) == 'number')
-	assert(modApiExt_internal)
 	
-	local modUtils = modApiExt_internal.getMostRecent()
 	local ptable = modUtils.pawn:getSavedataTable(pawnId)
 	if not ptable then return {} end
 	
@@ -29,9 +29,26 @@ end
 -- table will be empty outside of missions with available save data.
 function this.GetPowered(pawnId)
 	local ret = {}
+	local pawn = Board:GetPawn(pawnId)
+	if not pawn then return ret end
+	
+	-- if not a mech with purchaseable weaponry
+	if pawnId > 2 then
+		-- get weapons from default pawn table.
+		local pData = _G[pawn:GetType()]
+		for i, weapon in ipairs(pData.SkillList) do
+			ret[i] = {
+				base = weapon,
+				weapon = weapon
+			}
+		end
+		
+		return ret
+	end
+	
 	local weapons = getWeapons(pawnId)
 	
-	for i = 1, 2 do
+	for i = 1, #weapons do
 		
 		-- if 'powered' array's first core is powered.
 		local power = weapons[i].power or {0}
