@@ -2,7 +2,7 @@
 ---------------------------------------------------------------------
 -- Highlighted v1.2 - code library
 --[[-----------------------------------------------------------------
-	
+	needs to be loaded to function.
 ]]
 local path = mod_loader.mods[modApi.currentMod].scriptPath
 local modUtils = require(path .."modApiExt/modApiExt")
@@ -16,7 +16,7 @@ function this:Get()
 	return self.highlighted
 end
 
-function this:load(modApiExt)
+function this:load()
 	modUtils:addTileHighlightedHook(function(_, tile)
 		self.highlighted = tile
 	end)

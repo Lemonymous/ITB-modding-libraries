@@ -2,7 +2,7 @@
 ---------------------------------------------------------------------
 -- Selected v1.3 - code library
 --[[-----------------------------------------------------------------
-	
+	needs to be loaded to function.
 ]]
 local path = mod_loader.mods[modApi.currentMod].scriptPath
 local modUtils = require(path .."modApiExt/modApiExt")
