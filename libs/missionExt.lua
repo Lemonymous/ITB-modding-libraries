@@ -1,7 +1,7 @@
 
 local mod = mod_loader.mods[modApi.currentMod]
 local path = mod.scriptPath
-local getModUtils = require(path .."libs/getModUtils")
+local modUtils = require(path .."modApiExt/modApiExt")
 local id = mod.id
 local this = {}
 
@@ -20,8 +20,6 @@ function this:hasEnded(m)
 end
 
 function this:load()
-	modUtils = getModUtils()
-	
 	modApi:addMissionStartHook(init)
 	modApi:addMissionNextPhaseCreatedHook(function(_, m) init(m) end)
 	modUtils:addResetTurnHook(function() modApi:runLater(init) end)

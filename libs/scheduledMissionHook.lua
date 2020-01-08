@@ -4,7 +4,7 @@
 -- or additional code needs to be provided to reschedule hooks at game load/reset.
 local mod = mod_loader.mods[modApi.currentMod]
 local path = mod.scriptPath
-local getModUtils = require(path .."libs/getModUtils")
+local modUtils = require(path .."modApiExt/modApiExt")
 local this = {}
 local hooks = {}
 
@@ -15,8 +15,6 @@ end
 sdlext.addGameExitedHook(reset)
 
 function this:load()
-	local modUtils = getModUtils()
-	
 	modUtils:addResetTurnHook(reset)
 	modUtils:addGameLoadedHook(reset)
 	modApi:addMissionEndHook(reset)

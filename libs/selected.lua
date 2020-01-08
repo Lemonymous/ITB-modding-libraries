@@ -5,7 +5,7 @@
 	*modified for hotseat
 ]]
 local path = mod_loader.mods[modApi.currentMod].scriptPath
-local getModUtils = require(path .."libs/getModUtils")
+local modUtils = require(path .."modApiExt/modApiExt")
 local this = {}
 
 sdlext.addGameExitedHook(function()
@@ -17,8 +17,6 @@ function this:Get()
 end
 
 function this:load()
-	local modUtils = getModUtils()
-	
 	modUtils:addPawnSelectedHook(function(_, pawn)
 		self.selected = pawn
 	end)

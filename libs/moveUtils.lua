@@ -9,7 +9,7 @@
 
 local path = mod_loader.mods[modApi.currentMod].scriptPath
 local teamTurn = require(path .."libs/teamTurn")
-local getModUtils = require(path .."libs/getModUtils")
+local modUtils = require(path .."modApiExt/modApiExt")
 local this = {}
 
 -- returns true if pawn is being moved.
@@ -32,8 +32,6 @@ function this:HasMoved(pawn)
 end
 
 function this:load()
-	local modUtils = getModUtils()
-	
 	modUtils:addPawnMoveStartHook(function(mission, pawn)
 		mission.lmn_hasMoved = mission.lmn_hasMoved or {}
 		mission.lmn_hasMoved[pawn:GetId()] = Game:GetTurnCount()
