@@ -77,7 +77,7 @@
 ----------------------------------------------------------------------------------------
 
 -- worldConstants.QueuedSetSpeed(effect, value)		-> calls set function with isQueued = true
--- worldConstants.QueuedResetSpeed(effect)	-> calls set function with isQueued = true
+-- worldConstants.QueuedResetSpeed(effect)			-> calls set function with isQueued = true
 
 -------------------------------------------------------
 -- worldConstants.GetDefaultSpeed()
