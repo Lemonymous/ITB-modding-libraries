@@ -1,8 +1,8 @@
 
 ---------------------------------------------------------------------
--- Selected v1.2* - code library
+-- Selected v1.3 - code library
 --[[-----------------------------------------------------------------
-	*modified for hotseat
+	
 ]]
 local path = mod_loader.mods[modApi.currentMod].scriptPath
 local modUtils = require(path .."modApiExt/modApiExt")

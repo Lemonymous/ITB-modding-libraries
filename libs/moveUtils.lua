@@ -1,11 +1,10 @@
 
 ---------------------------------------------------------------------
--- MoveUtils v1.0* - code library
+-- MoveUtils v1.1 - code library
 ---------------------------------------------------------------------
 -- attempts at useful functions related to the 'Move' skill
 --
 -- needs to be loaded with the function 'load' before use.
--- *modified for hotseat
 
 local path = mod_loader.mods[modApi.currentMod].scriptPath
 local teamTurn = require(path .."libs/teamTurn")

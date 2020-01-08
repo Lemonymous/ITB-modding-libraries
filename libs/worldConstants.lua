@@ -1,6 +1,6 @@
 
 --------------------------------------------
--- World Constants v.1.3 - code library
+-- World Constants v.1.4 - code library
 --------------------------------------------
 -- provides functions for setting/resetting
 -- projectile/charge speed,
