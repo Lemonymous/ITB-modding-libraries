@@ -116,7 +116,7 @@
 	 example:
 	----------
 	local current = weaponApi.GetCurrent(0)
-	LOG("current:".. = save_table(current))
+	LOG("current:".. save_table(current))
 	
 	
 ]]-------------------------------------------------------------------------------
