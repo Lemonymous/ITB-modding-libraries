@@ -1,6 +1,6 @@
 
 ---------------------------------------------------------------------
--- Trait v1.2 - code library
+-- Trait v1.3 - code library
 ---------------------------------------------------------------------
 -- add a trait description and icon to the tooltip of a unit type.
 -- max one per unit type, and should only be used for unit types created
@@ -11,6 +11,7 @@
 --
 -- v1.1: streamlined and removed functionality that was beyond scope (tutorial tips).
 -- v1.2: removed getModUtils lib dependency.
+-- v1.3: allowed separately specifiying the glow icon and allow setting properies as separate strings
 
 local mod = mod_loader.mods[modApi.currentMod]
 local path = mod.resourcePath
@@ -55,34 +56,55 @@ end
 
 function this:Add(input)
 	local id = module_id .. traitCount
-	local pawnTypes = input.PawnTypes
+
+	-- start by parsing the icon
+	-- if a table, copy the two items from the table
 	local icon = input.Icon
-	local desc = input.Description
-	
-	assert(type(pawnTypes) == 'table' or type(pawnTypes) == 'string', "must be string or table of strings")
-	assert(type(icon) == 'table' or type(icon) == 'string', "must be string or table of length 2 with string and Point")
-	assert(type(desc) == 'table', "must be table of length 2 with title and text")
-	
+	local file_icon, icon_offset
+	if type(icon) == 'table' then
+		file_icon = icon[1]
+		if #icon > 1 then
+			icon_offset = icon[2]
+		else
+			icon_offset = Point(0,0)
+		end
+	elseif type(icon) == 'string' then
+		file_icon = icon
+		if input.IconOffset then
+			icon_offset = input.IconOffset
+		else
+			icon_offset = Point(0,0)
+		end
+	else
+		error("Icon must be string or table of length 2 with string and Point")
+	end
+	assert(type(icon_offset) == 'userdata', "icon offset must be a Point")
+
+	-- pawn types must be a array
+	local pawnTypes = input.PawnTypes
+	assert(type(pawnTypes) == 'table' or type(pawnTypes) == 'string', "PawnTypes must be string or table of strings")
 	if type(pawnTypes) ~= 'table' then
 		pawnTypes = {pawnTypes}
 	end
-	
-	if type(icon) ~= 'table' then
-		icon = {icon, Point(0,0)}
+
+	-- combine the name into description if passed separately
+	local desc = input.Description
+	if type(desc) == 'string' then
+		assert(type(input.Title) == 'string', "Title must be a string")
+		desc = {input.Title, desc}
 	end
-	
+	assert(type(desc) == 'table', "Description must be a string or a table of length 2 with title and text")
+
 	for _, pawnType in ipairs(pawnTypes) do
 		traits[pawnType] = {
 			id = id,
 			desc = desc
 		}
 	end
-	
+
 	local path = "combat/icons/icon_".. id .. ".png"
 	local pathGlow = "combat/icons/icon_".. id .. "_glow.png"
-	local file_icon = icon[1]
-	local file_icon_glow = icon[1]:sub(1, -5) .."_glow.png"
-	local icon_offset = icon[2]
+	local file_icon_glow = input.IconGlow or file_icon:sub(1, -5) .."_glow.png"
 	local is_vanilla_asset = file_icon:find("^img/")
 	
 	if is_vanilla_asset then
